@@ -77,7 +77,7 @@
     }
 
     /* Navigation Modal Overlay */
-    .nav-modal-overlay {
+    .modal-overlay { /* Common class for all modals */
       display: none; /* Hidden by default */
       position: fixed;
       z-index: 1002; /* Above FAB */
@@ -95,7 +95,7 @@
     }
 
     /* Modal Content Box */
-    .nav-modal-content {
+    .modal-content { /* Common class for all modal content */
       background-color: #fefefe;
       margin: 15% auto; /* 15% from the top and centered */
       padding: 30px;
@@ -113,7 +113,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* Close Button for Modal */
+    /* Close Button for Modals */
     .close-btn {
       color: #aaa;
       position: absolute;
@@ -242,6 +242,17 @@
       font-weight: 600;
       color: #28a745; /* Green color for selected option text */
     }
+    /* Visual feedback for selected option */
+    label input[type="radio"]:checked {
+        border: 2px solid #28a745; /* Green border around selected radio */
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Green glow */
+    }
+    label.selected-option { /* Class added to the label when selected */
+        background-color: #d4edda; /* Light green background */
+        border-color: #28a745; /* Green border */
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+    }
+
 
     /* Submit Button Styling */
     #submitBtn { 
@@ -340,7 +351,7 @@
       #submitBtn { font-size: 1.2em; padding: 15px; }
       .result-h1 { font-size: 2.2em; }
       .result-total { font-size: 2em; }
-      .nav-modal-content {
+      .modal-content {
         width: 95%;
         margin: 5% auto;
         padding: 20px;
@@ -383,6 +394,111 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
+
+    /* Time's Up Notification Modal */
+    #time-up-modal {
+      z-index: 1003; /* Higher than other modals */
+    }
+
+    #time-up-modal-content {
+      border: 3px solid #e74c3c; /* Red border for urgency */
+    }
+
+    #time-up-modal-content h2 {
+      color: #e74c3c; /* Red heading */
+    }
+
+    #time-up-modal-content button {
+      background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%); /* Red gradient button */
+    }
+
+    #time-up-modal-content button:hover {
+      background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%);
+    }
+
+    /* Submission Confirmation Modal */
+    #confirm-submit-modal {
+        z-index: 1004; /* Even higher z-index */
+    }
+    #confirm-submit-modal-content {
+        max-width: 450px;
+        padding: 35px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        text-align: center;
+        border: 2px solid #f39c12; /* Orange border for warning */
+    }
+    #confirm-submit-modal-content h2 {
+        color: #f39c12; /* Orange heading */
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    #confirm-submit-modal-content p {
+        font-size: 1.1em;
+        color: #444;
+        margin-bottom: 30px;
+    }
+    #confirm-submit-modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    #confirm-submit-modal-buttons button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #confirm-submit-btn {
+        background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%); /* Green for confirm */
+        color: #fff;
+    }
+    #confirm-submit-btn:hover {
+        background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+        transform: translateY(-2px);
+    }
+    #cancel-submit-btn {
+        background: #e0e0e0; /* Grey for cancel */
+        color: #555;
+    }
+    #cancel-submit-btn:hover {
+        background: #d0d0d0;
+        transform: translateY(-2px);
+    }
+
+    /* Progress Bar */
+    #progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    #progress-bar {
+      height: 25px;
+      width: 0%;
+      background-color: #28a745; /* Green progress */
+      border-radius: 10px;
+      text-align: center;
+      line-height: 25px;
+      color: white;
+      font-weight: bold;
+      transition: width 0.4s ease-in-out;
+    }
+    #progress-text {
+        text-align: center;
+        font-size: 1.1em;
+        margin-top: 10px;
+        color: #555;
+        font-weight: 600;
+    }
+
   </style>
 </head>
 <body>
@@ -400,6 +516,11 @@
 
   <div id="quiz-content-wrapper" style="display: none;">
     <div id="timer">Time Left: 02:00:00</div>
+
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+    <div id="progress-text">Question 0 of 90</div>
 
     <form id="quizForm">
 
@@ -1044,7 +1165,7 @@
         <label><input type="radio" name="q90" value="4"><span> Option 4</span></label>
       </div>
 
-      <button type="button" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+      <button type="button" id="submitBtn">Submit Quiz</button>
     </form>
 
     <button id="open-nav-btn" title="Open Question Navigation">
@@ -1058,15 +1179,34 @@
       </svg>
     </button>
 
-    <div id="nav-modal" class="nav-modal-overlay">
-      <div class="nav-modal-content">
+    <div id="nav-modal" class="modal-overlay">
+      <div class="modal-content">
         <span class="close-btn" id="close-nav-btn">&times;</span>
         <h2>Question Navigation</h2>
         <div id="question-nav">
           </div>
       </div>
     </div>
-  </div> <script>
+  </div> <div id="time-up-modal" class="modal-overlay">
+    <div id="time-up-modal-content" class="modal-content">
+      <h2>⏰ Time's Up! ⏰</h2>
+      <p>Your time has expired. Your test has been automatically submitted.</p>
+      <button id="close-time-up-modal-btn">OK</button>
+    </div>
+  </div>
+
+  <div id="confirm-submit-modal" class="modal-overlay">
+    <div id="confirm-submit-modal-content" class="modal-content">
+      <h2>Confirm Submission?</h2>
+      <p>Are you sure you want to submit the quiz? You will not be able to change your answers after submission.</p>
+      <div id="confirm-submit-modal-buttons">
+        <button id="cancel-submit-btn">Cancel</button>
+        <button id="confirm-submit-btn">Yes, Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
     // --- IMPORTANT! UPDATE YOUR ANSWERS HERE ---
     // You MUST fill in the correct answers for all 90 questions.
     // The value must be a string: "1", "2", "3", or "4".
@@ -1092,8 +1232,10 @@
       "Biology Section": Array.from({length: 30}, (_, i) => `q${i + 61}`)    // q61 to q90
     };
 
+    const totalQuestions = 90;
     let timeLeft = 7200; // 2 hours in seconds (7200 seconds = 2 * 60 * 60)
     let timerInterval; // Declare timerInterval globally
+    let submitted = false; // Flag to check if quiz is already submitted
 
     // Global object to store question statuses
     const questionStatuses = {};
@@ -1103,12 +1245,27 @@
     const startButton = document.getElementById('startButton');
     const quizContentWrapper = document.getElementById('quiz-content-wrapper');
 
-    // Get modal elements
+    // Get quiz elements
+    const quizForm = document.getElementById('quizForm');
+    const submitBtn = document.getElementById("submitBtn");
     const timerEl = document.getElementById("timer");
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    // Get navigation modal elements
     const openNavBtn = document.getElementById('open-nav-btn');
     const navModal = document.getElementById('nav-modal');
     const closeNavBtn = document.getElementById('close-nav-btn');
-    const questionNavContainer = navModal.querySelector('#question-nav'); // Select the nav container inside the modal
+    const questionNavContainer = navModal.querySelector('#question-nav');
+
+    // Get time-up modal elements
+    const timeUpModal = document.getElementById('time-up-modal');
+    const closeTimeUpModalBtn = document.getElementById('close-time-up-modal-btn');
+
+    // Get confirmation modal elements
+    const confirmSubmitModal = document.getElementById('confirm-submit-modal');
+    const confirmSubmitBtn = document.getElementById('confirm-submit-btn');
+    const cancelSubmitBtn = document.getElementById('cancel-submit-btn');
 
     // Function to start the timer
     function startTimer() {
@@ -1116,7 +1273,10 @@
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
           timerEl.textContent = "Time's Up!";
-          submitQuiz(); // Automatically submit quiz when time runs out
+          if (!submitted) { // Only show notification and submit if not already submitted
+            showTimeUpNotification();
+            submitQuiz();
+          }
           return;
         }
         // Format time as HH:MM:SS
@@ -1128,9 +1288,27 @@
       }, 1000);
     }
 
+    // Function to show the "Time's Up" notification modal
+    function showTimeUpNotification() {
+      timeUpModal.style.display = 'flex'; // Show the time-up modal
+    }
+
+    // Function to update progress bar and text
+    function updateProgressBar() {
+        let attemptedCount = 0;
+        for (const qId in questionStatuses) {
+            if (questionStatuses[qId] === 'attempted') {
+                attemptedCount++;
+            }
+        }
+        const progressPercentage = (attemptedCount / totalQuestions) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+        progressBar.textContent = `${Math.round(progressPercentage)}%`;
+        progressText.textContent = `Question ${attemptedCount} of ${totalQuestions}`;
+    }
+
     // Function to initialize question navigation and statuses
     function initializeQuizNavigation() {
-      const quizForm = document.getElementById('quizForm');
       const questions = quizForm.querySelectorAll('.question'); // Get all question divs
 
       questions.forEach((qDiv, index) => {
@@ -1154,19 +1332,27 @@
         });
         questionNavContainer.appendChild(navItem); // Append to modal's nav container
 
-        // Add change listener to radio buttons of this question to update status
+        // Add change listener to radio buttons of this question to update status and visual feedback
         const radios = qDiv.querySelectorAll(`input[name="${qName}"]`);
         radios.forEach(radio => {
           radio.addEventListener('change', () => {
+            // Remove 'selected-option' class from all labels for this question first
+            qDiv.querySelectorAll('label').forEach(label => {
+                label.classList.remove('selected-option');
+            });
+            // Add 'selected-option' class to the parent label of the checked radio
             if (radio.checked) {
-              questionStatuses[qName] = 'attempted';
-              updateQuestionNavUI(); // Update UI when a question is attempted
+                radio.parentElement.classList.add('selected-option');
+                questionStatuses[qName] = 'attempted';
+                updateQuestionNavUI(); // Update UI when a question is attempted
+                updateProgressBar(); // Update progress bar
             }
           });
         });
       });
 
       updateQuestionNavUI(); // Initial UI update after populating
+      updateProgressBar(); // Initial progress bar update
     }
 
     // Function to update the visual state of navigation items
@@ -1193,7 +1379,7 @@
       initializeQuizNavigation(); // Initialize question navigation
     });
 
-    // Event listeners for modal
+    // Event listeners for main navigation modal
     openNavBtn.addEventListener('click', () => {
       navModal.style.display = 'flex'; // Show modal
     });
@@ -1202,15 +1388,40 @@
       navModal.style.display = 'none'; // Hide modal
     });
 
-    // Close modal if user clicks outside of it
+    // Close main navigation modal if user clicks outside of it
     window.addEventListener('click', (event) => {
       if (event.target == navModal) {
         navModal.style.display = 'none';
       }
     });
 
+    // Event listener for closing the "Time's Up" modal
+    closeTimeUpModalBtn.addEventListener('click', () => {
+      timeUpModal.style.display = 'none'; // Hide the time-up modal
+    });
+
+    // Event listener for Submit Quiz button (opens confirmation modal)
+    submitBtn.addEventListener('click', () => {
+        confirmSubmitModal.style.display = 'flex'; // Show confirmation modal
+    });
+
+    // Event listener for "Confirm Submit" button in confirmation modal
+    confirmSubmitBtn.addEventListener('click', () => {
+        confirmSubmitModal.style.display = 'none'; // Hide confirmation modal
+        submitQuiz(); // Proceed with quiz submission
+    });
+
+    // Event listener for "Cancel Submit" button in confirmation modal
+    cancelSubmitBtn.addEventListener('click', () => {
+        confirmSubmitModal.style.display = 'none'; // Hide confirmation modal
+    });
+
+
     // Function to calculate score and show results
     function submitQuiz() {
+      if (submitted) return; // Prevent multiple submissions
+      submitted = true;
+
       clearInterval(timerInterval); // Stop the timer
       const form = document.getElementById("quizForm");
       let totalScore = 0;
@@ -1220,7 +1431,10 @@
         let correct = 0, incorrect = 0, unattempted = 0;
         let sectionScore = 0;
 
-        sections[section].forEach(q => {
+        // Get question IDs for the current section
+        const sectionQuestions = sections[section];
+
+        sectionQuestions.forEach(q => {
           const selected = form.querySelector(`input[name="${q}"]:checked`);
           if (!selected) {
             unattempted++;
@@ -1249,10 +1463,14 @@
         // Also make the labels look disabled for better UX
         input.parentElement.style.cursor = "not-allowed";
         input.parentElement.style.backgroundColor = "#f2f2f2";
+        input.parentElement.classList.remove('selected-option'); // Remove highlight
       });
 
-      // Disable the submit button
-      document.getElementById("submitBtn").disabled = true;
+      // Disable the submit button and navigation button
+      submitBtn.disabled = true;
+      openNavBtn.disabled = true; // Disable nav button too
+      openNavBtn.style.cursor = "not-allowed";
+      openNavBtn.style.opacity = "0.6";
 
       // Show results in a new window for easy viewing and printing
       const newWin = window.open("", "_blank");
