@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>90 Question Science Quiz - Medico Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Body and Container Styling */
+    body { 
+      font-family: 'Inter', sans-serif; /* Using Inter font */
+      max-width: 900px; /* Slightly wider for better layout */
+      margin: auto; 
+      padding: 25px; 
+      background: linear-gradient(135deg, #e0f2f7 0%, #ffffff 100%); /* Soft gradient background */
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 { 
+      text-align: center; 
+      color: #1a5276; /* Darker blue for headings */
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Timer Styling */
+    #timer { 
+      font-size: 2.2em; 
+      font-weight: 700; 
+      color: #c0392b; /* Red for urgency */
+      text-align: center; 
+      margin-bottom: 35px; 
+      background: #ffffff;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border: 2px solid #3498db; /* Blue border */
+      position: sticky;
+      top: 10px;
+      z-index: 1000;
+      animation: pulse 1.5s infinite alternate; /* Subtle pulse animation */
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+      to { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    }
+
+    /* Section Heading Styling */
+    .section-heading {
+      background: linear-gradient(45deg, #28a745 0%, #218838 100%); /* Green gradient */
+      border-left: 8px solid #1abc9c; /* Lighter green accent */
+      padding: 18px 25px;
+      font-size: 1.8em;
+      margin-top: 45px;
+      margin-bottom: 25px;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Question Card Styling */
+    .question { 
+      background: #ffffff; 
+      padding: 25px; 
+      margin: 20px 0; 
+      border-left: 6px solid #5dade2; /* Lighter blue accent */
+      border-radius: 12px; 
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease-in-out;
+    }
+    .question:hover {
+        transform: translateY(-3px);
+    }
+    .question p {
+        font-size: 1.15em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    .question img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Radio Option Styling */
+    label { 
+      display: flex; /* Use flexbox for alignment */
+      align-items: center;
+      margin: 10px 0; 
+      padding: 15px;
+      background: #f8fcfd; /* Very light blue background */
+      border: 1px solid #d4e6f1; /* Subtle border */
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      font-size: 1.05em;
+    }
+    label:hover {
+      background: #eaf7fb; /* Lighter blue on hover */
+      border-color: #aed6f1;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    input[type="radio"] {
+      margin-right: 15px;
+      transform: scale(1.2); /* Slightly larger radio buttons */
+      accent-color: #3498db; /* Blue accent for radio button */
+    }
+    label input[type="radio"]:checked + span {
+      font-weight: 600;
+      color: #28a745; /* Green color for selected option text */
+    }
+
+    /* Submit Button Styling */
+    #submitBtn { 
+      display: block;
+      width: 100%;
+      max-width: 300px; /* Max width for better appearance */
+      margin: 40px auto 20px; /* Center the button */
+      padding: 18px; 
+      font-size: 1.4em;
+      font-weight: 700;
+      background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%); /* Green gradient button */
+      color: #fff; 
+      border: none; 
+      border-radius: 10px; 
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    #submitBtn:hover {
+        background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%); /* Reverse gradient on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    }
+    #submitBtn:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* Result Page Styling (in new window) */
+    .result-body { 
+      font-family: 'Inter', sans-serif; 
+      padding: 30px; 
+      background-color: #f4f7f9; 
+      color: #333;
+    }
+    .result-h1 { 
+      color: #1a5276; 
+      text-align: center; 
+      margin-bottom: 40px; 
+      font-size: 2.8em;
+      font-weight: 700;
+    }
+    .result-section { 
+      margin-bottom: 25px; 
+      padding: 20px; 
+      background: #fff; 
+      border-left: 6px solid #3498db; 
+      border-radius: 10px; 
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1); 
+    }
+    .result-section h3 { 
+      margin-top: 0; 
+      color: #2980b9; 
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .result-total { 
+      margin-top: 40px; 
+      padding: 25px; 
+      text-align: center; 
+      font-size: 2.5em; 
+      font-weight: 700; 
+      color: #27ae60; 
+      background-color: #e8f5e9; 
+      border-radius: 12px; 
+      border: 2px solid #27ae60;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .result-button { 
+      display: block; 
+      width: 200px; 
+      margin: 40px auto 0; 
+      padding: 15px 25px; 
+      background: #3498db; 
+      color: #fff; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-size: 1.2em;
+      transition: background-color 0.3s ease;
+    }
+    .result-button:hover { background: #2980b9; }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { padding: 15px; }
+      h1 { font-size: 2em; }
+      #timer { font-size: 1.8em; }
+      .section-heading { font-size: 1.5em; padding: 15px 20px; }
+      .question { padding: 20px; }
+      label { padding: 12px; font-size: 1em; }
+      #submitBtn { font-size: 1.2em; padding: 15px; }
+      .result-h1 { font-size: 2.2em; }
+      .result-total { font-size: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🔬 Science Quiz: Physics, Chemistry & Biology 🧪</h1>
+  <div id="timer">Time Left: 02:00:00</div>
+
+  <form id="quizForm">
+
+    <div class="section-heading">👉 Starting Now: Physics Section</div>
+    
+    <div class="question">
+      <p>1. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+1" alt="Physics Question 1"></p>
+      <label><input type="radio" name="q1" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q1" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q1" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q1" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>2. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+2" alt="Physics Question 2"></p>
+      <label><input type="radio" name="q2" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q2" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q2" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q2" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>3. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+3" alt="Physics Question 3"></p>
+      <label><input type="radio" name="q3" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q3" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q3" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q3" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>4. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+4" alt="Physics Question 4"></p>
+      <label><input type="radio" name="q4" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q4" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q4" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q4" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>5. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+5" alt="Physics Question 5"></p>
+      <label><input type="radio" name="q5" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q5" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q5" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q5" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>6. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+6" alt="Physics Question 6"></p>
+      <label><input type="radio" name="q6" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q6" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q6" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q6" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>7. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+7" alt="Physics Question 7"></p>
+      <label><input type="radio" name="q7" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q7" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q7" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q7" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>8. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+8" alt="Physics Question 8"></p>
+      <label><input type="radio" name="q8" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q8" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q8" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q8" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>9. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+9" alt="Physics Question 9"></p>
+      <label><input type="radio" name="q9" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q9" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q9" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q9" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>10. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+10" alt="Physics Question 10"></p>
+      <label><input type="radio" name="q10" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q10" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q10" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q10" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>11. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+11" alt="Physics Question 11"></p>
+      <label><input type="radio" name="q11" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q11" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q11" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q11" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>12. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+12" alt="Physics Question 12"></p>
+      <label><input type="radio" name="q12" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q12" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q12" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q12" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>13. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+13" alt="Physics Question 13"></p>
+      <label><input type="radio" name="q13" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q13" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q13" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q13" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>14. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+14" alt="Physics Question 14"></p>
+      <label><input type="radio" name="q14" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q14" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q14" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q14" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>15. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+15" alt="Physics Question 15"></p>
+      <label><input type="radio" name="q15" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q15" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q15" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q15" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>16. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+16" alt="Physics Question 16"></p>
+      <label><input type="radio" name="q16" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q16" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q16" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q16" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>17. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+17" alt="Physics Question 17"></p>
+      <label><input type="radio" name="q17" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q17" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q17" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q17" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>18. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+18" alt="Physics Question 18"></p>
+      <label><input type="radio" name="q18" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q18" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q18" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q18" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>19. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+19" alt="Physics Question 19"></p>
+      <label><input type="radio" name="q19" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q19" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q19" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q19" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>20. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+20" alt="Physics Question 20"></p>
+      <label><input type="radio" name="q20" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q20" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q20" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q20" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>21. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+21" alt="Physics Question 21"></p>
+      <label><input type="radio" name="q21" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q21" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q21" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q21" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>22. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+22" alt="Physics Question 22"></p>
+      <label><input type="radio" name="q22" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q22" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q22" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q22" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>23. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+23" alt="Physics Question 23"></p>
+      <label><input type="radio" name="q23" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q23" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q23" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q23" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>24. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+24" alt="Physics Question 24"></p>
+      <label><input type="radio" name="q24" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q24" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q24" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q24" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>25. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+25" alt="Physics Question 25"></p>
+      <label><input type="radio" name="q25" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q25" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q25" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q25" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>26. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+26" alt="Physics Question 26"></p>
+      <label><input type="radio" name="q26" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q26" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q26" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q26" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>27. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+27" alt="Physics Question 27"></p>
+      <label><input type="radio" name="q27" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q27" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q27" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q27" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>28. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+28" alt="Physics Question 28"></p>
+      <label><input type="radio" name="q28" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q28" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q28" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q28" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>29. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+29" alt="Physics Question 29"></p>
+      <label><input type="radio" name="q29" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q29" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q29" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q29" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>30. <img src="https://placehold.co/600x200/aed6f1/1a5276?text=Physics+Question+30" alt="Physics Question 30"></p>
+      <label><input type="radio" name="q30" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q30" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q30" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q30" value="4"><span> Option 4</span></label>
+    </div>
+
+
+    <div class="section-heading">👉 Starting Now: Chemistry Section</div>
+
+    <div class="question">
+      <p>31. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+31" alt="Chemistry Question 31"></p>
+      <label><input type="radio" name="q31" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q31" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q31" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q31" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>32. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+32" alt="Chemistry Question 32"></p>
+      <label><input type="radio" name="q32" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q32" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q32" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q32" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>33. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+33" alt="Chemistry Question 33"></p>
+      <label><input type="radio" name="q33" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q33" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q33" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q33" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>34. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+34" alt="Chemistry Question 34"></p>
+      <label><input type="radio" name="q34" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q34" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q34" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q34" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>35. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+35" alt="Chemistry Question 35"></p>
+      <label><input type="radio" name="q35" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q35" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q35" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q35" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>36. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+36" alt="Chemistry Question 36"></p>
+      <label><input type="radio" name="q36" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q36" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q36" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q36" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>37. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+37" alt="Chemistry Question 37"></p>
+      <label><input type="radio" name="q37" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q37" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q37" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q37" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>38. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+38" alt="Chemistry Question 38"></p>
+      <label><input type="radio" name="q38" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q38" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q38" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q38" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>39. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+39" alt="Chemistry Question 39"></p>
+      <label><input type="radio" name="q39" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q39" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q39" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q39" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>40. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+40" alt="Chemistry Question 40"></p>
+      <label><input type="radio" name="q40" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q40" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q40" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q40" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>41. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+41" alt="Chemistry Question 41"></p>
+      <label><input type="radio" name="q41" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q41" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q41" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q41" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>42. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+42" alt="Chemistry Question 42"></p>
+      <label><input type="radio" name="q42" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q42" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q42" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q42" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>43. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+43" alt="Chemistry Question 43"></p>
+      <label><input type="radio" name="q43" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q43" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q43" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q43" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>44. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+44" alt="Chemistry Question 44"></p>
+      <label><input type="radio" name="q44" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q44" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q44" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q44" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>45. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+45" alt="Chemistry Question 45"></p>
+      <label><input type="radio" name="q45" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q45" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q45" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q45" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>46. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+46" alt="Chemistry Question 46"></p>
+      <label><input type="radio" name="q46" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q46" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q46" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q46" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>47. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+47" alt="Chemistry Question 47"></p>
+      <label><input type="radio" name="q47" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q47" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q47" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q47" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>48. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+48" alt="Chemistry Question 48"></p>
+      <label><input type="radio" name="q48" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q48" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q48" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q48" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>49. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+49" alt="Chemistry Question 49"></p>
+      <label><input type="radio" name="q49" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q49" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q49" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q49" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>50. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+50" alt="Chemistry Question 50"></p>
+      <label><input type="radio" name="q50" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q50" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q50" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q50" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>51. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+51" alt="Chemistry Question 51"></p>
+      <label><input type="radio" name="q51" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q51" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q51" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q51" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>52. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+52" alt="Chemistry Question 52"></p>
+      <label><input type="radio" name="q52" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q52" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q52" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q52" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>53. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+53" alt="Chemistry Question 53"></p>
+      <label><input type="radio" name="q53" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q53" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q53" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q53" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>54. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+54" alt="Chemistry Question 54"></p>
+      <label><input type="radio" name="q54" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q54" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q54" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q54" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>55. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+55" alt="Chemistry Question 55"></p>
+      <label><input type="radio" name="q55" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q55" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q55" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q55" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>56. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+56" alt="Chemistry Question 56"></p>
+      <label><input type="radio" name="q56" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q56" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q56" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q56" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>57. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+57" alt="Chemistry Question 57"></p>
+      <label><input type="radio" name="q57" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q57" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q57" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q57" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>58. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+58" alt="Chemistry Question 58"></p>
+      <label><input type="radio" name="q58" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q58" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q58" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q58" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>59. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+59" alt="Chemistry Question 59"></p>
+      <label><input type="radio" name="q59" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q59" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q59" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q59" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>60. <img src="https://placehold.co/600x200/d0e8f8/1a5276?text=Chemistry+Question+60" alt="Chemistry Question 60"></p>
+      <label><input type="radio" name="q60" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q60" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q60" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q60" value="4"><span> Option 4</span></label>
+    </div>
+
+
+    <div class="section-heading">👉 Starting Now: Biology Section</div>
+
+    <div class="question">
+      <p>61. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+61" alt="Biology Question 61"></p>
+      <label><input type="radio" name="q61" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q61" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q61" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q61" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>62. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+62" alt="Biology Question 62"></p>
+      <label><input type="radio" name="q62" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q62" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q62" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q62" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>63. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+63" alt="Biology Question 63"></p>
+      <label><input type="radio" name="q63" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q63" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q63" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q63" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>64. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+64" alt="Biology Question 64"></p>
+      <label><input type="radio" name="q64" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q64" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q64" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q64" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>65. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+65" alt="Biology Question 65"></p>
+      <label><input type="radio" name="q65" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q65" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q65" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q65" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>66. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+66" alt="Biology Question 66"></p>
+      <label><input type="radio" name="q66" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q66" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q66" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q66" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>67. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+67" alt="Biology Question 67"></p>
+      <label><input type="radio" name="q67" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q67" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q67" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q67" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>68. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+68" alt="Biology Question 68"></p>
+      <label><input type="radio" name="q68" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q68" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q68" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q68" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>69. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+69" alt="Biology Question 69"></p>
+      <label><input type="radio" name="q69" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q69" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q69" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q69" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>70. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+70" alt="Biology Question 70"></p>
+      <label><input type="radio" name="q70" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q70" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q70" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q70" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>71. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+71" alt="Biology Question 71"></p>
+      <label><input type="radio" name="q71" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q71" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q71" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q71" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>72. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+72" alt="Biology Question 72"></p>
+      <label><input type="radio" name="q72" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q72" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q72" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q72" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>73. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+73" alt="Biology Question 73"></p>
+      <label><input type="radio" name="q73" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q73" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q73" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q73" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>74. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+74" alt="Biology Question 74"></p>
+      <label><input type="radio" name="q74" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q74" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q74" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q74" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>75. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+75" alt="Biology Question 75"></p>
+      <label><input type="radio" name="q75" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q75" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q75" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q75" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>76. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+76" alt="Biology Question 76"></p>
+      <label><input type="radio" name="q76" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q76" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q76" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q76" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>77. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+77" alt="Biology Question 77"></p>
+      <label><input type="radio" name="q77" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q77" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q77" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q77" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>78. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+78" alt="Biology Question 78"></p>
+      <label><input type="radio" name="q78" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q78" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q78" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q78" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>79. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+79" alt="Biology Question 79"></p>
+      <label><input type="radio" name="q79" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q79" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q79" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q79" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>80. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+80" alt="Biology Question 80"></p>
+      <label><input type="radio" name="q80" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q80" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q80" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q80" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>81. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+81" alt="Biology Question 81"></p>
+      <label><input type="radio" name="q81" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q81" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q81" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q81" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>82. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+82" alt="Biology Question 82"></p>
+      <label><input type="radio" name="q82" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q82" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q82" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q82" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>83. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+83" alt="Biology Question 83"></p>
+      <label><input type="radio" name="q83" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q83" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q83" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q83" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>84. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+84" alt="Biology Question 84"></p>
+      <label><input type="radio" name="q84" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q84" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q84" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q84" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>85. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+85" alt="Biology Question 85"></p>
+      <label><input type="radio" name="q85" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q85" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q85" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q85" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>86. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+86" alt="Biology Question 86"></p>
+      <label><input type="radio" name="q86" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q86" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q86" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q86" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>87. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+87" alt="Biology Question 87"></p>
+      <label><input type="radio" name="q87" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q87" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q87" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q87" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>88. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+88" alt="Biology Question 88"></p>
+      <label><input type="radio" name="q88" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q88" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q88" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q88" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>89. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+89" alt="Biology Question 89"></p>
+      <label><input type="radio" name="q89" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q89" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q89" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q89" value="4"><span> Option 4</span></label>
+    </div>
+    <div class="question">
+      <p>90. <img src="https://placehold.co/600x200/bde0e8/1a5276?text=Biology+Question+90" alt="Biology Question 90"></p>
+      <label><input type="radio" name="q90" value="1"><span> Option 1</span></label>
+      <label><input type="radio" name="q90" value="2"><span> Option 2</span></label>
+      <label><input type="radio" name="q90" value="3"><span> Option 3</span></label>
+      <label><input type="radio" name="q90" value="4"><span> Option 4</span></label>
+    </div>
+
+    <button type="button" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+  </form>
+
+  <script>
+    // --- IMPORTANT! UPDATE YOUR ANSWERS HERE ---
+    // You MUST fill in the correct answers for all 90 questions.
+    // The value must be a string: "1", "2", "3", or "4".
+    const correctAnswers = {
+      // Physics Answers (q1 to q30) - These are example answers, please replace them with your actual correct answers.
+      q1: "2", q2: "1", q3: "4", q4: "3", q5: "1", q6: "2", q7: "4", q8: "3", q9: "1", q10: "2",
+      q11: "3", q12: "4", q13: "1", q14: "2", q15: "3", q16: "4", q17: "1", q18: "2", q19: "3", q20: "4",
+      q21: "1", q22: "2", q23: "3", q24: "4", q25: "1", q26: "2", q27: "3", q28: "4", q29: "1", q30: "2",
+      // Chemistry Answers (q31 to q60) - These are example answers, please replace them with your actual correct answers.
+      q31: "3", q32: "1", q33: "4", q34: "2", q35: "1", q36: "3", q37: "4", q38: "2", q39: "1", q40: "3",
+      q41: "4", q42: "2", q43: "1", q44: "3", q45: "4", q46: "2", q47: "1", q48: "3", q49: "4", q50: "2",
+      q51: "1", q52: "3", q53: "4", q54: "2", q55: "1", q56: "3", q57: "4", q58: "2", q59: "1", q60: "3",
+      // Biology Answers (q61 to q90) - These are example answers, please replace them with your actual correct answers.
+      q61: "4", q62: "1", q63: "2", q64: "3", q65: "4", q66: "1", q67: "2", q68: "3", q69: "4", q70: "1",
+      q71: "2", q72: "3", q73: "4", q74: "1", q75: "2", q76: "3", q77: "4", q78: "1", q79: "2", q80: "3",
+      q81: "4", q82: "1", q83: "2", q84: "3", q85: "4", q86: "1", q87: "2", q88: "3", q89: "4", q90: "1"
+    };
+
+    // Defines the questions in each section
+    const sections = {
+      "Physics Section": Array.from({length: 30}, (_, i) => `q${i + 1}`),   // q1 to q30
+      "Chemistry Section": Array.from({length: 30}, (_, i) => `q${i + 31}`), // q31 to q60
+      "Biology Section": Array.from({length: 30}, (_, i) => `q${i + 61}`)    // q61 to q90
+    };
+
+    let timeLeft = 7200; // 2 hours in seconds (7200 seconds = 2 * 60 * 60)
+    const timerEl = document.getElementById("timer");
+    const interval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerEl.textContent = "Time's Up!";
+        submitQuiz(); // Automatically submit quiz when time runs out
+        return;
+      }
+      // Format time as HH:MM:SS
+      const h = String(Math.floor(timeLeft / 3600)).padStart(2, '0');
+      const m = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, '0');
+      const s = String(timeLeft % 60).padStart(2, '0');
+      timerEl.textContent = `Time Left: ${h}:${m}:${s}`;
+      timeLeft--;
+    }, 1000);
+
+    // Function to calculate score and show results
+    function submitQuiz() {
+      clearInterval(interval); // Stop the timer
+      const form = document.getElementById("quizForm");
+      let totalScore = 0;
+      const result = {};
+
+      for (let section in sections) {
+        let correct = 0, incorrect = 0, unattempted = 0;
+        let sectionScore = 0;
+
+        sections[section].forEach(q => {
+          const selected = form.querySelector(`input[name="${q}"]:checked`);
+          if (!selected) {
+            unattempted++;
+          } else if (selected.value === correctAnswers[q]) {
+            correct++;
+            sectionScore += 1; // +1 for correct answer
+          } else {
+            incorrect++;
+            sectionScore -= 0.33; // -0.33 for incorrect answer
+          }
+        });
+        
+        totalScore += sectionScore; // Add section score to overall total
+        result[section] = {
+          correct, 
+          incorrect, 
+          unattempted,
+          score: Math.max(0, sectionScore).toFixed(2) // Ensure section score is not negative
+        };
+      }
+
+      // Disable all radio inputs after submission to prevent further changes
+      const allInputs = form.querySelectorAll('input[type="radio"]');
+      allInputs.forEach(input => {
+        input.disabled = true;
+        // Also make the labels look disabled for better UX
+        input.parentElement.style.cursor = "not-allowed";
+        input.parentElement.style.backgroundColor = "#f2f2f2";
+      });
+
+      // Disable the submit button
+      document.getElementById("submitBtn").disabled = true;
+
+      // Show results in a new window for easy viewing and printing
+      const newWin = window.open("", "_blank");
+      newWin.document.write(`
+        <html>
+          <head>
+            <title>Quiz Result</title>
+            <style>
+              body { font-family: 'Inter', sans-serif; padding: 30px; background-color: #f4f7f9; color: #333; }
+              h1 { color: #1a5276; text-align: center; margin-bottom: 40px; font-size: 2.8em; font-weight: 700; }
+              .section { 
+                margin-bottom: 25px; 
+                padding: 20px; 
+                background: #fff; 
+                border-left: 6px solid #3498db; 
+                border-radius: 10px; 
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1); 
+              }
+              .section h3 { margin-top: 0; color: #2980b9; font-size: 1.5em; margin-bottom: 10px; }
+              .total { 
+                margin-top: 40px; 
+                padding: 25px; 
+                text-align: center; 
+                font-size: 2.5em; 
+                font-weight: 700; 
+                color: #27ae60; 
+                background-color: #e8f5e9; 
+                border-radius: 12px; 
+                border: 2px solid #27ae60;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+              }
+              button { 
+                display: block; 
+                width: 200px; 
+                margin: 40px auto 0; 
+                padding: 15px 25px; 
+                background: #3498db; 
+                color: #fff; 
+                border: none; 
+                border-radius: 8px; 
+                cursor: pointer; 
+                font-size: 1.2em;
+                transition: background-color 0.3s ease;
+              }
+              button:hover { background: #2980b9; }
+              p { line-height: 1.6; margin-bottom: 5px;}
+            </style>
+          </head>
+          <body>
+            <h1>Your Score Card</h1>
+            ${Object.keys(result).map(sec => `
+              <div class="section">
+                <h3>${sec}</h3>
+                <p>✅ Correct: ${result[sec].correct}</p>
+                <p>❌ Incorrect: ${result[sec].incorrect}</p>
+                <p>⚪ Unattempted: ${result[sec].unattempted}</p>
+                <p><strong>📊 Section Score: ${result[sec].score}</strong></p>
+              </div>
+            `).join("")}
+            <div class="total">🏁 Total Score: ${Math.max(0, totalScore).toFixed(2)}</div>
+            <button onclick="window.print()">🖨️ Print Result</button>
+          </body>
+        </html>
+      `);
+      newWin.document.close();
+    }
+  </script>
+</body>
+</html>
